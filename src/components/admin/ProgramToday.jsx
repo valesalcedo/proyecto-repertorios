@@ -6,6 +6,7 @@ export default function ProgramToday({
   setPrograma,
   saved,
   onSave,
+  todayStr,
 }) {
   const handleSlotChange = (slot, songId) => {
     setPrograma((currentPrograma) => ({
@@ -14,7 +15,7 @@ export default function ProgramToday({
     }));
   };
 
-  const programaCompleto = SLOTS.filter((slot) => slot.id !== "ofertorio").every(
+  const repertorioCompleto = SLOTS.filter((slot) => slot.id !== "ofertorio").every(
     (slot) => programa[slot.id]
   );
 
@@ -22,19 +23,19 @@ export default function ProgramToday({
     <section>
       <div className="page-header">
         <div>
-          <h1>Programa de Hoy</h1>
-          <p>Asigna una canción a cada momento de la misa o celebración</p>
+          <h1>Repertorio de Hoy</h1>
+          <p className="page-date">{todayStr}</p>
         </div>
 
         <button
           onClick={onSave}
           className={`save-button ${saved ? "saved" : ""}`}
         >
-          {saved ? "✓ Publicado" : "Publicar programa"}
+          {saved ? "Publicado" : "Publicar"}
         </button>
       </div>
 
-      <div className="programa-list">
+      <div className="repertorio-grid">
         {SLOTS.map((slot) => {
           const selected = Boolean(programa[slot.id]);
 
@@ -43,8 +44,6 @@ export default function ProgramToday({
               key={slot.id}
               className={`programa-card ${selected ? "selected" : ""}`}
             >
-              <div className="slot-icon">{slot.icon}</div>
-
               <div className="slot-content">
                 <div className="slot-title">{slot.label}</div>
 
@@ -55,7 +54,7 @@ export default function ProgramToday({
                   }
                   className="select"
                 >
-                  <option value="">— Seleccionar canción —</option>
+                  <option value="">Seleccionar canción</option>
 
                   {songs
                     .filter((song) => song.categoria === slot.id)
@@ -83,8 +82,8 @@ export default function ProgramToday({
         })}
       </div>
 
-      {!programaCompleto && (
-        <div className="warning">⚠️ Faltan algunos momentos por asignar</div>
+      {!repertorioCompleto && (
+        <div className="warning">Faltan algunos momentos por asignar</div>
       )}
     </section>
   );

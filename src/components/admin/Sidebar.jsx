@@ -1,41 +1,21 @@
-import { SLOTS } from "../../data/slots";
-
-export default function Sidebar({ view, setView, songs, programa }) {
+export default function Sidebar({ view, setView }) {
   return (
-    <nav className="sidebar">
-      {[
-        { id: "programa", label: "Programa de Hoy", icon: "📋" },
-        { id: "canciones", label: "Canciones", icon: "🎵" },
-      ].map((item) => (
-        <button
-          key={item.id}
-          onClick={() => setView(item.id)}
-          className={`nav-button ${view === item.id ? "active" : ""}`}
-        >
-          <span>{item.icon}</span>
-          {item.label}
-        </button>
-      ))}
+    <aside className="sidebar">
+      <button
+        type="button"
+        onClick={() => setView("repertorio")}
+        className={`nav-button ${view === "repertorio" ? "active" : ""}`}
+      >
+        Repertorio de hoy
+      </button>
 
-      <div className="sidebar-section-title">PROGRAMA ACTUAL</div>
-
-      {SLOTS.map((slot) => {
-        const cancion = songs.find(
-          (song) => song.id === programa[slot.id]
-        );
-
-        return (
-          <div
-            key={slot.id}
-            className={`sidebar-slot ${cancion ? "has-song" : ""}`}
-          >
-            <div className="sidebar-slot-label">{slot.label}</div>
-            <div className="sidebar-slot-song">
-              {cancion ? cancion.titulo : "—"}
-            </div>
-          </div>
-        );
-      })}
-    </nav>
+      <button
+        type="button"
+        onClick={() => setView("canciones")}
+        className={`nav-button ${view === "canciones" ? "active" : ""}`}
+      >
+        Canciones
+      </button>
+    </aside>
   );
 }

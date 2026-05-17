@@ -23,12 +23,12 @@ const todayStr = new Date().toLocaleDateString("es-ES", {
   day: "numeric",
 });
 
-const handleLogout = () => supabase.auth.signOut();
-
 const todayISO = new Date().toISOString().slice(0, 10);
 
+const handleLogout = () => supabase.auth.signOut();
+
 export default function AdminPanel() {
-  const [view, setView] = useState("programa");
+  const [view, setView] = useState("repertorio");
   const [songs, setSongs] = useState([]);
   const [programa, setPrograma] = useState(EMPTY_PROGRAM);
   const [saved, setSaved] = useState(false);
@@ -66,7 +66,7 @@ export default function AdminPanel() {
       setTimeout(() => setSaved(false), 3000);
     } catch (err) {
       console.error(err);
-      setError("No se pudo guardar el programa del día.");
+      setError("No se pudo publicar el repertorio del día.");
     }
   };
 
@@ -131,7 +131,7 @@ export default function AdminPanel() {
   if (loading) {
     return (
       <div className="admin-panel loading-screen">
-        <div>Cargando cancionero...</div>
+        <div>Cargando repertorio...</div>
       </div>
     );
   }
@@ -141,37 +141,31 @@ export default function AdminPanel() {
       <header className="topbar">
         <div className="brand">
           <img src={corosLogo} alt="COROS Pastoral UC" className="brand-logo" />
-          <div className="brand-text">
-            <div className="brand-title">Creador de repertorios</div>
+
+          <div className="brand-title">
+            Creador de repertorios
           </div>
         </div>
 
-        <div className="topbar-actions">
-          <div className="today">{todayStr}</div>
-          <button onClick={handleLogout} className="logout-button">
-            Cerrar sesión
-          </button>
-        </div>
+        <button onClick={handleLogout} className="logout-button">
+          Cerrar sesión
+        </button>
       </header>
 
       <div className="layout">
-        <Sidebar
-          view={view}
-          setView={setView}
-          songs={songs}
-          programa={programa}
-        />
+        <Sidebar view={view} setView={setView} />
 
         <main className="main-content">
           {error && <div className="error-message">{error}</div>}
 
-          {view === "programa" && (
+          {view === "repertorio" && (
             <ProgramToday
               songs={songs}
               programa={programa}
               setPrograma={setPrograma}
               saved={saved}
               onSave={handleSaveProgram}
+              todayStr={todayStr}
             />
           )}
 
