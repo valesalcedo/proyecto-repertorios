@@ -37,7 +37,7 @@ export default function ProgramToday({
       <div className="programa-list">
         {SLOTS.map((slot, index) => {
           const selected = songs.find(
-            (song) => song.id === Number(programa[slot.id])
+            (song) => song.id === programa[slot.id]
           );
 
           return (

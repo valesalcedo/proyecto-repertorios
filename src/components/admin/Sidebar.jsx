@@ -21,7 +21,7 @@ export default function Sidebar({ view, setView, songs, programa }) {
 
       {SLOTS.map((slot) => {
         const cancion = songs.find(
-          (song) => song.id === Number(programa[slot.id])
+          (song) => song.id === programa[slot.id]
         );
 
         return (

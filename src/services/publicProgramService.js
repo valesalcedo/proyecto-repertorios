@@ -4,17 +4,29 @@ import { SLOTS } from "../data/slots";
 export async function getProgramForDate(fecha) {
   const targetDate = fecha ?? new Date().toISOString().split("T")[0];
 
-  // 1. Traer el programa del día
   const { data: programa, error: e1 } = await supabase
     .from("programas_diarios")
-    .select("slot, cancion_id")
-    .eq("fecha", targetDate);
+    .select("*")
+    .eq("fecha", targetDate)
+    .maybeSingle();
 
   if (e1) throw e1;
-  if (!programa?.length) return [];
+  if (!programa) return [];
 
-  // 2. Traer las canciones que aparecen en el programa
-  const ids = programa.map(r => r.cancion_id);
+  const slotMap = {
+    entrada:    programa.entrada_id,
+    penitencial: programa.penitencial_id,
+    aclamacion: programa.aclamacion_id,
+    ofertorio:  programa.ofertorio_id,
+    santo:      programa.santo_id,
+    cordero:    programa.cordero_id,
+    comunion:   programa.comunion_id,
+    salida:     programa.salida_id,
+  };
+
+  const ids = Object.values(slotMap).filter(Boolean);
+  if (!ids.length) return [];
+
   const { data: canciones, error: e2 } = await supabase
     .from("canciones")
     .select("id, titulo, letra")
@@ -22,9 +34,7 @@ export async function getProgramForDate(fecha) {
 
   if (e2) throw e2;
 
-  // 3. Unir y ordenar según SLOTS
   const cancionMap = Object.fromEntries(canciones.map(c => [c.id, c]));
-  const slotMap = Object.fromEntries(programa.map(r => [r.slot, r.cancion_id]));
 
   return SLOTS
     .filter(slot => slotMap[slot.id])
