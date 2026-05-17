@@ -1,45 +1,38 @@
 import { supabase } from "../lib/supabaseClient";
 import { SLOTS } from "../data/slots";
 
-/**
- * Trae el programa del día con las letras incluidas en una sola query.
- * Usa la foreign key join de Supabase: programas_diarios → canciones
- *
- * @param {string} fecha  "YYYY-MM-DD" — por defecto hoy
- * @returns {Array}  [{ slot, label, icon, cancion: { id, titulo, letra } }]
- *                  Solo incluye los slots que tienen canción asignada,
- *                  en el orden definido en SLOTS.
- */
 export async function getProgramForDate(fecha) {
   const targetDate = fecha ?? new Date().toISOString().split("T")[0];
 
-  const { data, error } = await supabase
+  // 1. Traer el programa del día
+  const { data: programa, error: e1 } = await supabase
     .from("programas_diarios")
-    .select(`
-      slot,
-      canciones!cancion_id (
-        id,
-        titulo,
-        letra
-      )
-    `)
+    .select("slot, cancion_id")
     .eq("fecha", targetDate);
 
-  if (error) throw error;
+  if (e1) throw e1;
+  if (!programa?.length) return [];
 
-  // Indexar por slot para acceso O(1)
-  const bySlot = {};
-  for (const row of data ?? []) {
-    bySlot[row.slot] = row.canciones;
-  }
+  // 2. Traer las canciones que aparecen en el programa
+  const ids = programa.map(r => r.cancion_id);
+  const { data: canciones, error: e2 } = await supabase
+    .from("canciones")
+    .select("id, titulo, letra")
+    .in("id", ids);
 
-  // Devolver en el orden canónico de SLOTS, filtrando los vacíos
+  if (e2) throw e2;
+
+  // 3. Unir y ordenar según SLOTS
+  const cancionMap = Object.fromEntries(canciones.map(c => [c.id, c]));
+  const slotMap = Object.fromEntries(programa.map(r => [r.slot, r.cancion_id]));
+
   return SLOTS
+    .filter(slot => slotMap[slot.id])
     .map(slot => ({
       slot:    slot.id,
       label:   slot.label,
       icon:    slot.icon,
-      cancion: bySlot[slot.id] ?? null,
+      cancion: cancionMap[slotMap[slot.id]] ?? null,
     }))
     .filter(item => item.cancion !== null);
 }
