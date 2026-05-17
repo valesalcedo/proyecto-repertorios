@@ -34,6 +34,7 @@ export default function AdminPanel() {
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     loadInitialData();
@@ -63,7 +64,6 @@ export default function AdminPanel() {
     try {
       await saveProgram(todayISO, programa);
       setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
     } catch (err) {
       console.error(err);
       setError("No se pudo publicar el repertorio del día.");
@@ -128,6 +128,11 @@ export default function AdminPanel() {
     }
   };
 
+  const handleChangeView = (newView) => {
+    setView(newView);
+    setMobileMenuOpen(false);
+  };
+
   if (loading) {
     return (
       <div className="admin-panel loading-screen">
@@ -142,15 +147,48 @@ export default function AdminPanel() {
         <div className="brand">
           <img src={corosLogo} alt="COROS Pastoral UC" className="brand-logo" />
 
-          <div className="brand-title">
-            Creador de repertorios
-          </div>
+          <div className="brand-title">Creador de repertorios</div>
         </div>
 
-        <button onClick={handleLogout} className="logout-button">
+        <button
+          type="button"
+          className="menu-button"
+          onClick={() => setMobileMenuOpen((current) => !current)}
+          aria-label="Abrir menú"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <button onClick={handleLogout} className="logout-button desktop-only">
           Cerrar sesión
         </button>
       </header>
+
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          <button
+            type="button"
+            onClick={() => handleChangeView("repertorio")}
+            className={view === "repertorio" ? "active" : ""}
+          >
+            Repertorio de hoy
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleChangeView("canciones")}
+            className={view === "canciones" ? "active" : ""}
+          >
+            Canciones
+          </button>
+
+          <button type="button" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
+        </div>
+      )}
 
       <div className="layout">
         <Sidebar view={view} setView={setView} />

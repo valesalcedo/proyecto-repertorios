@@ -15,6 +15,10 @@ export default function ProgramToday({
     }));
   };
 
+  const handleViewPublic = () => {
+    window.location.href = "/";
+  };
+
   const repertorioCompleto = SLOTS.filter((slot) => slot.id !== "ofertorio").every(
     (slot) => programa[slot.id]
   );
@@ -27,12 +31,24 @@ export default function ProgramToday({
           <p className="page-date">{todayStr}</p>
         </div>
 
-        <button
-          onClick={onSave}
-          className={`save-button ${saved ? "saved" : ""}`}
-        >
-          {saved ? "Publicado" : "Publicar"}
-        </button>
+        <div className="publish-actions">
+          <button
+            onClick={onSave}
+            className={`save-button ${saved ? "saved" : ""}`}
+          >
+            {saved ? "Publicado" : "Publicar"}
+          </button>
+
+          {saved && (
+            <button
+              type="button"
+              onClick={handleViewPublic}
+              className="view-public-button"
+            >
+              Ver vista pública
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="repertorio-grid">

@@ -48,8 +48,6 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* Layout general */
-
 .admin-panel {
   min-height: 100vh;
   background: var(--color-bg);
@@ -81,7 +79,7 @@ textarea:focus-visible {
 .brand {
   width: 100%;
   display: grid;
-  grid-template-columns: 180px 1fr auto;
+  grid-template-columns: 180px 1fr;
   align-items: center;
   gap: 28px;
 }
@@ -118,6 +116,35 @@ textarea:focus-visible {
 .logout-button:hover {
   background: var(--color-white);
   color: var(--color-azure);
+}
+
+/* Botón hamburguesa */
+
+.menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 2px solid var(--color-white);
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.menu-button span {
+  width: 20px;
+  height: 3px;
+  background: var(--color-white);
+  border-radius: 999px;
+}
+
+/* Menú celular */
+
+.mobile-menu {
+  display: none;
 }
 
 /* Estructura */
@@ -197,6 +224,13 @@ textarea:focus-visible {
 
 /* Botones */
 
+.publish-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
 .save-button,
 .primary-button {
   background: var(--color-gray-orange);
@@ -219,6 +253,23 @@ textarea:focus-visible {
 
 .save-button.saved {
   background: var(--color-success);
+}
+
+.view-public-button {
+  background: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 22px;
+  padding: 11px 24px;
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: transform 0.15s, opacity 0.2s;
+}
+
+.view-public-button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
 }
 
 .secondary-button {
@@ -257,7 +308,7 @@ textarea:focus-visible {
 
 .programa-card {
   background: var(--color-light-cyan);
-  border: 2px solid var(--color-white);
+  border: 2px solid var(--color-gray-orange);
   border-radius: 24px;
   padding: 18px 26px;
   min-height: 86px;
@@ -269,7 +320,7 @@ textarea:focus-visible {
 
 .programa-card:hover {
   transform: translateY(-1px);
-  border-color: var(--color-gray-orange);
+  border-color: var(--color-dark-blue);
 }
 
 .programa-card.selected {
@@ -549,29 +600,63 @@ textarea:focus-visible {
   font-weight: 600;
 }
 
-/* Responsive */
+/* Responsive celular */
 
 @media (max-width: 900px) {
   .topbar {
-    padding: 18px 22px;
+    min-height: 100px;
+    padding: 16px 22px;
+    position: relative;
   }
 
   .brand {
     grid-template-columns: 120px 1fr;
-    gap: 16px;
+    gap: 18px;
+    padding-right: 48px;
   }
 
   .brand-logo {
-    width: 115px;
+    width: 120px;
   }
 
   .brand-title {
-    font-size: 18px;
+    font-size: 23px;
     text-align: left;
+    line-height: 1.2;
   }
 
-  .logout-button {
+  .desktop-only {
     display: none;
+  }
+
+  .menu-button {
+    display: flex;
+    position: absolute;
+    top: 26px;
+    right: 20px;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-dark-blue);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .mobile-menu button {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--color-white);
+    padding: 18px 24px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu button.active {
+    background: rgba(255, 255, 255, 0.12);
   }
 
   .layout {
@@ -579,28 +664,62 @@ textarea:focus-visible {
   }
 
   .sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 0;
-  }
-
-  .nav-button {
-    padding: 16px 22px;
-    white-space: nowrap;
+    display: none;
   }
 
   .main-content {
-    padding: 24px;
+    padding: 42px 26px 40px;
   }
 
   .page-header {
     flex-direction: column;
-    gap: 16px;
+    gap: 22px;
+    margin-bottom: 32px;
+  }
+
+  .page-header h1 {
+    font-size: 42px;
+    line-height: 1.05;
+  }
+
+  .page-date {
+    font-size: 18px;
+    margin-top: 14px;
+  }
+
+  .publish-actions {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .save-button,
+  .view-public-button {
+    min-width: 185px;
+    padding: 16px 34px;
+    border-radius: 28px;
+    font-size: 16px;
   }
 
   .repertorio-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .programa-card {
+    min-height: 150px;
+    padding: 34px 28px;
+    border-radius: 28px;
+  }
+
+  .slot-title {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .select {
+    font-size: 22px;
+    padding: 18px 20px;
+    border-radius: 22px;
   }
 
   .songs-view {
