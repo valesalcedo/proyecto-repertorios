@@ -24,7 +24,7 @@ export async function saveProgram(fecha, programa) {
     .map(([slot, cancionId]) => ({
       fecha,
       slot,
-      cancion_id: cancionId,
+      cancion_id: Number(cancionId),
     }));
 
   const { error } = await supabase
