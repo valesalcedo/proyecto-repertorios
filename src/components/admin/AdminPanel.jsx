@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import "./AdminPanel.css";
+import corosLogo from "./logo.png";
 
 import Sidebar from "./Sidebar";
 import ProgramToday from "./ProgramToday";
 import SongsManager from "./SongsManager";
 
 import { EMPTY_PROGRAM } from "../../data/slots";
-import { getSongs, createSong, updateSong, deleteSong } from "../../services/songsService";
+import {
+  getSongs,
+  createSong,
+  updateSong,
+  deleteSong,
+} from "../../services/songsService";
 import { getProgramByDate, saveProgram } from "../../services/programService";
 
 const todayStr = new Date().toLocaleDateString("es-ES", {
@@ -134,28 +140,15 @@ export default function AdminPanel() {
     <div className="admin-panel">
       <header className="topbar">
         <div className="brand">
-          <span className="brand-icon">✝</span>
-          <div>
-            <div className="brand-title">Cancionero · Admin</div>
-            <div className="brand-subtitle">UNIVERSIDAD</div>
+          <img src={corosLogo} alt="COROS Pastoral UC" className="brand-logo" />
+          <div className="brand-text">
+            <div className="brand-title">Creador de repertorios</div>
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+        <div className="topbar-actions">
           <div className="today">{todayStr}</div>
-          <button
-            onClick={handleLogout}
-            style={{
-              background: "rgba(255,255,255,0.1)",
-              border: "1px solid rgba(255,255,255,0.25)",
-              color: "#fff8ec",
-              borderRadius: 8,
-              padding: "7px 16px",
-              fontSize: 13,
-              cursor: "pointer",
-              fontFamily: "Georgia, serif",
-            }}
-          >
+          <button onClick={handleLogout} className="logout-button">
             Cerrar sesión
           </button>
         </div>

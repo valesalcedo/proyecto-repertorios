@@ -30,15 +30,13 @@ export default function ProgramToday({
           onClick={onSave}
           className={`save-button ${saved ? "saved" : ""}`}
         >
-          {saved ? "✓ Guardado" : "Guardar programa"}
+          {saved ? "✓ Publicado" : "Publicar programa"}
         </button>
       </div>
 
       <div className="programa-list">
-        {SLOTS.map((slot, index) => {
-          const selected = songs.find(
-            (song) => song.id === programa[slot.id]
-          );
+        {SLOTS.map((slot) => {
+          const selected = Boolean(programa[slot.id]);
 
           return (
             <article
@@ -48,7 +46,6 @@ export default function ProgramToday({
               <div className="slot-icon">{slot.icon}</div>
 
               <div className="slot-content">
-                <div className="slot-number">MOMENTO {index + 1}</div>
                 <div className="slot-title">{slot.label}</div>
 
                 <select
@@ -81,12 +78,6 @@ export default function ProgramToday({
                     ))}
                 </select>
               </div>
-
-              {selected && (
-                <div className="song-preview">
-                  {selected.letra.split("\n")[0]}…
-                </div>
-              )}
             </article>
           );
         })}
