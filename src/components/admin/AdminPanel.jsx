@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabaseClient";
 import "./AdminPanel.css";
 
 import Sidebar from "./Sidebar";
@@ -15,6 +16,8 @@ const todayStr = new Date().toLocaleDateString("es-ES", {
   month: "long",
   day: "numeric",
 });
+
+const handleLogout = () => supabase.auth.signOut();
 
 const todayISO = new Date().toISOString().slice(0, 10);
 
@@ -138,7 +141,24 @@ export default function AdminPanel() {
           </div>
         </div>
 
-        <div className="today">{todayStr}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <div className="today">{todayStr}</div>
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.25)",
+              color: "#fff8ec",
+              borderRadius: 8,
+              padding: "7px 16px",
+              fontSize: 13,
+              cursor: "pointer",
+              fontFamily: "Georgia, serif",
+            }}
+          >
+            Cerrar sesión
+          </button>
+        </div>
       </header>
 
       <div className="layout">
