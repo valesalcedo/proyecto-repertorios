@@ -17,7 +17,7 @@ export async function getProgramForDate(fecha) {
     .from("programas_diarios")
     .select(`
       slot,
-      canciones (
+      canciones!cancion_id (
         id,
         titulo,
         letra
