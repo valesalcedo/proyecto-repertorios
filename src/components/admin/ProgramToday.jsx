@@ -32,11 +32,12 @@ export default function ProgramToday({
         </div>
 
         <div className="publish-actions">
+          {/* CAMBIO 1: "Publicar" antes de guardar, "Actualizar" después */}
           <button
             onClick={onSave}
             className={`save-button ${saved ? "saved" : ""}`}
           >
-            {saved ? "Publicado" : "Publicar"}
+            {saved ? "Actualizar" : "Publicar"}
           </button>
 
           {saved && (
@@ -54,6 +55,8 @@ export default function ProgramToday({
       <div className="repertorio-grid">
         {SLOTS.map((slot) => {
           const selected = Boolean(programa[slot.id]);
+          // CAMBIO 5: solo canciones de ese momento
+          const slotSongs = songs.filter((song) => song.categoria === slot.id);
 
           return (
             <article
@@ -71,26 +74,14 @@ export default function ProgramToday({
                   className="select"
                 >
                   <option value="">Seleccionar canción</option>
-
-                  {songs
-                    .filter((song) => song.categoria === slot.id)
-                    .map((song) => (
-                      <option key={song.id} value={song.id}>
-                        {song.titulo}
-                      </option>
-                    ))}
-
-                  {songs.some((song) => song.categoria !== slot.id) && (
-                    <option disabled>──────────</option>
+                  {slotSongs.map((song) => (
+                    <option key={song.id} value={song.id}>
+                      {song.titulo}
+                    </option>
+                  ))}
+                  {slotSongs.length === 0 && (
+                    <option disabled>Sin canciones para este momento</option>
                   )}
-
-                  {songs
-                    .filter((song) => song.categoria !== slot.id)
-                    .map((song) => (
-                      <option key={song.id} value={song.id}>
-                        {song.titulo}
-                      </option>
-                    ))}
                 </select>
               </div>
             </article>

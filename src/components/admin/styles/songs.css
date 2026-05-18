@@ -45,6 +45,12 @@
   gap: 8px;
 }
 
+/* CAMBIO 3: contenedor del item + su detalle expandible */
+.song-list-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .song-list-button {
   background: var(--color-light-cyan);
   color: var(--color-dark-blue);
@@ -53,6 +59,7 @@
   padding: 13px 16px;
   text-align: left;
   transition: border-color 0.15s, background 0.15s;
+  position: relative;
 }
 
 .song-list-button:hover {
@@ -68,6 +75,7 @@
 .song-list-title {
   font-weight: 900;
   font-size: 14px;
+  padding-right: 22px; /* espacio para chevron */
 }
 
 .song-list-category {
@@ -77,6 +85,32 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* CAMBIO 3: chevron solo visible en móvil */
+.song-list-chevron {
+  display: none;
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9px;
+  opacity: 0.6;
+}
+
+/* CAMBIO 3: detalle inline — oculto en desktop, visible en móvil */
+.song-inline-detail {
+  display: none;
+}
+
+/* CAMBIO 4: mensaje cuando no hay canciones en el filtro */
+.empty-filter-msg {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+  padding: 20px 0;
+  opacity: 0.8;
 }
 
 .song-detail-panel {

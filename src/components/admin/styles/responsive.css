@@ -132,6 +132,8 @@
     min-height: 46px;
   }
 
+  /* ─── Canciones: modo acordeón en móvil ─── */
+
   .songs-view {
     flex-direction: column;
     height: auto;
@@ -159,12 +161,18 @@
   }
 
   .songs-list {
-    max-height: 280px;
-    overflow-y: auto;
+    max-height: none; /* sin límite de altura, el acorde lo maneja */
+    overflow-y: visible;
   }
 
   .song-list-button {
     padding: 11px 14px;
+    border-radius: 14px;
+    border-radius: 14px 14px 0 0; /* esquinas superiores redondeadas al expandir */
+  }
+
+  /* Cuando el botón NO está expandido, restaurar esquinas normales */
+  .song-list-item:not(:has(.song-inline-detail)) .song-list-button {
     border-radius: 14px;
   }
 
@@ -174,6 +182,27 @@
 
   .song-list-category {
     font-size: 10px;
+  }
+
+  /* CAMBIO 3: mostrar chevron en móvil */
+  .song-list-chevron {
+    display: block;
+  }
+
+  /* CAMBIO 3: detalle inline visible en móvil */
+  .song-inline-detail {
+    display: block;
+    background: var(--color-light-cyan);
+    border: 2px solid var(--color-dark-blue);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    padding: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* CAMBIO 3: ocultar el panel separado en móvil cuando no se está agregando */
+  .song-detail-panel.mobile-hidden {
+    display: none;
   }
 
   .song-detail-panel {
@@ -270,10 +299,6 @@
   .view-public-button {
     width: 100%;
     text-align: center;
-  }
-
-  .songs-list {
-    max-height: 240px;
   }
 
   .song-detail-panel {
