@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(201, 160, 106, 0.45);
+  outline-offset: 2px;
+}
+
+.admin-panel {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-main);
+}
+
+.loading-screen {
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: var(--color-dark-blue);
+}

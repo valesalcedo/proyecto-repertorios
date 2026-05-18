@@ -1,0 +1,76 @@
+.topbar {
+  min-height: 88px;
+  padding: 18px 40px;
+  background: var(--color-azure);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.brand {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-logo {
+  display: block;
+  width: 150px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.brand-title {
+  color: var(--color-white);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.logout-button {
+  min-width: 150px;
+  height: 46px;
+  background: transparent;
+  color: var(--color-white);
+  border: 2px solid var(--color-white);
+  border-radius: 18px;
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: background 0.2s, color 0.2s;
+}
+
+.logout-button:hover {
+  background: var(--color-white);
+  color: var(--color-azure);
+}
+
+.menu-button {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 2px solid var(--color-white);
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.menu-button span {
+  width: 20px;
+  height: 3px;
+  background: var(--color-white);
+  border-radius: 999px;
+}
+
+.mobile-menu {
+  display: none;
+}

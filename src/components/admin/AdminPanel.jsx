@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
-import "./AdminPanel.css";
+import "./styles/AdminPanel.css";
 import corosLogo from "./logo.png";
 
 import Sidebar from "./Sidebar";

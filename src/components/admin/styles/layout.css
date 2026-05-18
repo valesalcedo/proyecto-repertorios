@@ -1,0 +1,36 @@
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+.main-content {
+  flex: 1;
+  background: var(--color-bg);
+  padding: 34px 34px 40px;
+  overflow-y: auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: var(--color-dark-blue);
+  font-size: 28px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.page-date {
+  margin: 8px 0 0;
+  color: var(--color-dark-blue);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
